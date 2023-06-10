@@ -2,20 +2,19 @@
 WIDTH, HEIGHT = 1200, 800
 FPS = 60
 
+# game settings
+LV = 0
+
 # paddle settings
-paddle_w = 330
-paddle_h = 35
-paddle_speed = 15
+PADDLE_W = 330
+PADDLE_H = 35
+PADDLE_SPEED = 15
 
-# ball settings
-ball_radius = 20
-ball_speed = 6
-ball_rect = int(ball_radius * 2 ** 0.5)
-dx, dy = 1, -1
-
-brik_color = {
-    'a':(255, 255, 255),  # standard brick
-    'b':(150, 150, 150),  # unbroken briсk
-    'c':(0, 0, 255),  # 2hp briсk
-    'd':(0, 0, 100)  # 3hp briсk
+#  brick settings
+brick_color = {
+    'a': (255, 255, 255),  # standard brick
+    'b': (150, 150, 150),  # unbroken brick
+    'c': (0, 0, 255),  # 2hp brick
+    'd': (0, 0, 100),  # 3hp briсk
+    'e': (250, 0, 0)  # exploding brick
 }
