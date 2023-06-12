@@ -12,9 +12,8 @@ img = pygame.image.load('D:/school/project/img/fon1.jpeg').convert()
 
 # game objekts
 paddle = pygame.Rect(WIDTH // 2 - PADDLE_W // 2, HEIGHT - PADDLE_H - 10, PADDLE_W, PADDLE_H)
-# paddle = pygame.Rect(WIDTH // 2 - paddle_w // 2, HEIGHT - paddle_h - 10, paddle_w, paddle_h)
 ball = Ball()
-block_list = [[Brick(i, j) for i in range(10)] for j in range(4)]
+brick_list = [[Brick(i, j) for i in range(10)] for j in range(4)]
 
 
 def check_collision_wall():
@@ -27,25 +26,34 @@ def check_collision_wall():
         ball.dy = -ball.dy
     # collision paddle
     if ball.body.colliderect(paddle) and ball.dy > 0:
-        dx, dy = ball.check_collision(paddle)
+        ball.dx, ball.dy = ball.check_collision(paddle)
 
-
+def check_collision_block():
+    global ball, brick_list
+    for i in brick_list:
+        t = [j.body for j in i]
+        hit_index = ball.body.collidelist(t)
+        if hit_index != -1:
+            hit_rect = i[hit_index]
+            if not hit_rect.ruined:
+                hit_rect.brik_reaction()
+                ball.dx, ball.dy = hit_rect.make_collision(ball)
+        
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
+
     sc.blit(img, (0, 0))
     # drawing
-    [[j.draw(sc) for j in i]for i in block_list]
+    [[j.draw(sc) for j in i]for i in brick_list]
     pygame.draw.rect(sc, pygame.Color(((0, 255, 170))), paddle)
     ball.draw(sc)
-    # ball movement
-    ball.body.x += ball.ball_speed * ball.dx
-    ball.body.y += ball.ball_speed * ball.dy
+
+    #move and collision
+    ball.move()
     check_collision_wall()
-    [[j.check_collision(ball) for j in i] for i in block_list]
-    ball.check_collision(paddle)
-    # control
+    check_collision_block()
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT] and paddle.left > 0:
         paddle.left -= PADDLE_SPEED

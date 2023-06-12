@@ -12,9 +12,10 @@ class Brick:
         self.ruined = False
 
     def draw(self, sc):
-        pygame.draw.rect(sc, brick_color[self.brick_type], self.body)
+        if not self.ruined:
+            pygame.draw.rect(sc, brick_color[self.brick_type], self.body)
 
-    def check_collision(self, ball):
+    def make_collision(self, ball):
         if ball.dx > 0:
             delta_x = ball.body.right - self.body.left
         else:
@@ -25,7 +26,7 @@ class Brick:
             delta_y = self.body.bottom - ball.body.top
 
         if abs(delta_x - delta_y) < 10:
-            ball.dx, dy = -ball.dx, -ball.dy
+            ball.dx, ball.dy = -ball.dx, -ball.dy
         elif delta_x > delta_y:
             ball.dy = -ball.dy
         elif delta_y > delta_x:
@@ -37,13 +38,13 @@ class Brick:
         if self.ruined:
             pass
         else:
-            if self.brik_type == 'a':
+            if self.brick_type == 'a':
                 self.ruined = True
-            if self.brik_type == 'c':
-                self.brik_type = 'a'
-            if self.brik_type == 'd':
-                self.brik_type = 'c'
-            if self.brik_type == 'e':
+            if self.brick_type == 'c':
+                self.brick_type = 'a'
+            if self.brick_type == 'd':
+                self.brick_type = 'c'
+            if self.brick_type == 'e':
                 self.ruined = True
                 try: block_list[self.i-1][self.j].brik_reaction()
                 except:pass
@@ -66,6 +67,10 @@ class Ball:
 
     def set_position(self):
         pass
+
+    def move(self):
+        self.body.x += self.ball_speed * self.dx
+        self.body.y += self.ball_speed * self.dy
 
     def set_radius(self, radius):
         self.ball_rect = int(radius * 2 ** 0.5)
