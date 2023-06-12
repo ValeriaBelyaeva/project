@@ -1,12 +1,12 @@
 import pygame
-from settings import *
+from settings import GOD_MODE, WIDTH, HEIGHT, PADDLE_W, PADDLE_H, PADDLE_SPEED, FPS, brick_color
 from levels import *
 from random import randrange as rnd
 
 
 class Brick:
-    def __init__(self, i, j):
-        self.brick_type = level_map[LV][j][i]
+    def __init__(self, i, j, lv):
+        self.brick_type = level_map[lv][j][i]
         self.i, self.j = i, j
         self.body = pygame.Rect(10 + 120 * i, 10 + 70 * j, 100, 50)
         self.ruined = False
@@ -63,6 +63,8 @@ class Ball:
         self.ball_speed = 6
         self.ball_rect = int(self.ball_radius * 2 ** 0.5)
         self.dx, self.dy = 1, -1
+        if GOD_MODE:
+            self.dx, self.dy = 5, -5
         self.body = pygame.Rect(rnd(self.ball_rect, WIDTH - self.ball_rect), HEIGHT // 2, self.ball_rect, self.ball_rect)
 
     def set_position(self):

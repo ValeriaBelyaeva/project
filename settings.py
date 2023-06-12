@@ -1,14 +1,13 @@
 # display settings
 WIDTH, HEIGHT = 1200, 800
+GOD_MODE = True
 FPS = 60
-
-# game settings
-LV = 0
 
 # paddle settings
 PADDLE_W = 330
 PADDLE_H = 35
 PADDLE_SPEED = 15
+
 
 #  brick settings
 brick_color = {

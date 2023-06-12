@@ -1,8 +1,7 @@
 import pygame
-from classes import Ball, Brick
-from settings import *
-from levels import *
-from brick_functions import *
+from game_objects import Ball, Brick
+from settings import GOD_MODE, WIDTH, HEIGHT, PADDLE_W, PADDLE_H, PADDLE_SPEED, FPS
+from utilites import check_collision_wall, check_collision_block
 from random import randrange as rnd
 
 pygame.init()
@@ -10,51 +9,52 @@ clock = pygame.time.Clock()
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 img = pygame.image.load('D:/school/project/img/fon1.jpeg').convert()
 
-# game objekts
+# values
+need_restart = True
+lv = 0
+
+# game objects
 paddle = pygame.Rect(WIDTH // 2 - PADDLE_W // 2, HEIGHT - PADDLE_H - 10, PADDLE_W, PADDLE_H)
 ball = Ball()
-brick_list = [[Brick(i, j) for i in range(10)] for j in range(4)]
+brick_list = [[Brick(i, j, lv) for i in range(10)] for j in range(4)]
 
+def restart():
+    global paddle, ball, brick_list, lv
+    paddle = pygame.Rect(WIDTH // 2 - PADDLE_W // 2, HEIGHT - PADDLE_H - 10, PADDLE_W, PADDLE_H)
+    ball = Ball()
+    brick_list = [[Brick(i, j, lv) for i in range(10)] for j in range(4)]
 
-def check_collision_wall():
-    global ball, paddle
-    # left/right collision:
-    if ball.body.centerx < ball.ball_radius or ball.body.centerx > WIDTH - ball.ball_radius:
-        ball.dx = -ball.dx
-    # top collision:
-    if ball.body.centery < ball.ball_radius:
-        ball.dy = -ball.dy
-    # collision paddle
-    if ball.body.colliderect(paddle) and ball.dy > 0:
-        ball.dx, ball.dy = ball.check_collision(paddle)
-
-def check_collision_block():
-    global ball, brick_list
+def go_to_next_level():
     for i in brick_list:
-        t = [j.body for j in i]
-        hit_index = ball.body.collidelist(t)
-        if hit_index != -1:
-            hit_rect = i[hit_index]
-            if not hit_rect.ruined:
-                hit_rect.brik_reaction()
-                ball.dx, ball.dy = hit_rect.make_collision(ball)
-        
+        for j in i:
+            if not j.ruined:
+                return False
+    lv += 1
+    restart()
+
 while True:
+    print(need_restart)
+    if need_restart:
+        need_restart = False
+        restart()
+    # quit game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
 
     sc.blit(img, (0, 0))
     # drawing
-    [[j.draw(sc) for j in i]for i in brick_list]
+    [[j.draw(sc) for j in i] for i in brick_list]
     pygame.draw.rect(sc, pygame.Color(((0, 255, 170))), paddle)
     ball.draw(sc)
 
-    #move and collision
+    # move and collision
     ball.move()
-    check_collision_wall()
-    check_collision_block()
+    need_restart=check_collision_wall(ball, paddle)
+    check_collision_block(ball, brick_list)
     key = pygame.key.get_pressed()
+    if key[pygame.K_g]:
+        GOD_MODE = True
     if key[pygame.K_LEFT] and paddle.left > 0:
         paddle.left -= PADDLE_SPEED
     if key[pygame.K_RIGHT] and paddle.right < WIDTH:

@@ -2,9 +2,9 @@ level_map = [
     # level0
     [
     'aaaaaaaaaa',
-    'abaaaaaaba',
-    'abaaaaaaba',
-    'abbcddcbba',
+    'aaaaaaaaaa',
+    'aaaaaaaaaa',
+    'aaaaaaaaaa',
     ],
     # level1
     [
