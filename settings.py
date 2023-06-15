@@ -15,5 +15,6 @@ brick_color = {
     'b': (150, 150, 150),  # unbroken brick
     'c': (0, 0, 255),  # 2hp brick
     'd': (0, 0, 100),  # 3hp briсk
-    'e': (250, 0, 0)  # exploding brick
+    'e': (250, 0, 0),  # exploding brick
+    'f': (0, 0, 0)  # empty brick
 }

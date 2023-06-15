@@ -9,7 +9,7 @@ class Brick:
         self.brick_type = level_map[lv][j][i]
         self.i, self.j = i, j
         self.body = pygame.Rect(10 + 120 * i, 10 + 70 * j, 100, 50)
-        self.ruined = False
+        self.ruined = self.brick_type=='f'
 
     def draw(self, sc):
         if not self.ruined:
@@ -63,8 +63,9 @@ class Ball:
         self.ball_speed = 6
         self.ball_rect = int(self.ball_radius * 2 ** 0.5)
         self.dx, self.dy = 1, -1
-        if GOD_MODE:
-            self.dx, self.dy = 5, -5
+        # if GOD_MODE:
+        #     self.dx, self.dy = 3, -3
+
         self.body = pygame.Rect(rnd(self.ball_rect, WIDTH - self.ball_rect), HEIGHT // 2, self.ball_rect, self.ball_rect)
 
     def set_position(self):

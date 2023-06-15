@@ -18,13 +18,16 @@ paddle = pygame.Rect(WIDTH // 2 - PADDLE_W // 2, HEIGHT - PADDLE_H - 10, PADDLE_
 ball = Ball()
 brick_list = [[Brick(i, j, lv) for i in range(10)] for j in range(4)]
 
+
 def restart():
     global paddle, ball, brick_list, lv
     paddle = pygame.Rect(WIDTH // 2 - PADDLE_W // 2, HEIGHT - PADDLE_H - 10, PADDLE_W, PADDLE_H)
     ball = Ball()
     brick_list = [[Brick(i, j, lv) for i in range(10)] for j in range(4)]
 
+
 def go_to_next_level():
+    global lv
     for i in brick_list:
         for j in i:
             if not j.ruined:
@@ -32,11 +35,13 @@ def go_to_next_level():
     lv += 1
     restart()
 
+
 while True:
     print(need_restart)
     if need_restart:
         need_restart = False
         restart()
+    go_to_next_level()
     # quit game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -50,7 +55,7 @@ while True:
 
     # move and collision
     ball.move()
-    need_restart=check_collision_wall(ball, paddle)
+    need_restart = check_collision_wall(ball, paddle)
     check_collision_block(ball, brick_list)
     key = pygame.key.get_pressed()
     if key[pygame.K_g]:
