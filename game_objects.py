@@ -34,10 +34,11 @@ class Brick:
 
         return ball.dx, ball.dy
 
-    def brik_reaction(self, block_list=[]):
+    def brik_reaction(self, brick_list):
         if self.ruined:
-            pass
+            return []
         else:
+            to_delite = []
             if self.brick_type == 'a':
                 self.ruined = True
             if self.brick_type == 'c':
@@ -46,14 +47,24 @@ class Brick:
                 self.brick_type = 'c'
             if self.brick_type == 'e':
                 self.ruined = True
-                try: block_list[self.i-1][self.j].brik_reaction()
+                try:
+                    brick_list[self.i-1][self.j]
+                    to_delite.append([self.i-1, self.j])
                 except:pass
-                try: block_list[self.i+1][self.j].brik_reaction()
+                try:
+                    brick_list[self.i+1][self.j]
+                    to_delite.append([self.i+1, self.j])
                 except:pass
-                try: block_list[self.i][self.j-1].brik_reaction()
+                try:
+                    brick_list[self.i][self.j-1]
+                    to_delite.append([self.i, self.j-1])
                 except:pass
-                try: block_list[self.i][self.j+1].brik_reaction()
+                try:
+                    brick_list[self.i][self.j+1]
+                    to_delite.append([self.i, self.j+1])
                 except:pass
+            return to_delite
+
 
 
 

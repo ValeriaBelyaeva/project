@@ -29,5 +29,8 @@ def check_collision_block(ball, brick_list):
         if hit_index != -1:
             hit_rect = i[hit_index]
             if not hit_rect.ruined:
-                hit_rect.brik_reaction()
+                to_delete = hit_rect.brik_reaction(brick_list)
+                while len(to_delete) > 0:
+                    brick_id = to_delete.pop()
+                    to_delete = to_delete + brick_list[brick_id[0]][brick_id[1]].brik_reaction(brick_list)
                 ball.dx, ball.dy = hit_rect.make_collision(ball)
