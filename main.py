@@ -5,6 +5,7 @@ from utilites import check_collision_wall, check_collision_block
 from random import randrange as rnd
 
 pygame.init()
+menu = False
 clock = pygame.time.Clock()
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 img = pygame.image.load('D:/school/project/img/fon1.jpeg').convert()
@@ -48,14 +49,17 @@ while True:
 
     sc.blit(img, (0, 0))
     # drawing
-    [[j.draw(sc) for j in i] for i in brick_list]
-    pygame.draw.rect(sc, pygame.Color(((0, 255, 170))), paddle)
-    ball.draw(sc)
+    if not menu:
+        [[j.draw(sc) for j in i] for i in brick_list]
+        pygame.draw.rect(sc, pygame.Color(((0, 255, 170))), paddle)
+        ball.draw(sc)
 
     # move and collision
-    ball.move()
-    need_restart = check_collision_wall(ball, paddle)
-    check_collision_block(ball, brick_list)
+    if not menu:
+        ball.move()
+        need_restart = check_collision_wall(ball, paddle)
+        check_collision_block(ball, brick_list)
+
     key = pygame.key.get_pressed()
     if key[pygame.K_g]:
         GOD_MODE = True
@@ -63,6 +67,8 @@ while True:
         paddle.left -= PADDLE_SPEED
     if key[pygame.K_RIGHT] and paddle.right < WIDTH:
         paddle.right += PADDLE_SPEED
+    if key[pygame.K_SPACE]:
+        menu = not menu
 
     # updating
     pygame.display.flip()
