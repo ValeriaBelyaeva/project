@@ -1,19 +1,33 @@
 level_map = [
     # level0
     [
+    'ffeeffeeff',
+    'feffeeffef',
+    'fffeffeeff',
+    'ffffeeffff'
+    ],
+    # level1
+    [
+    'ffffffffff',
+    'aaaaaaaaaa',
+    'aeaaaeaeae',
+    'aeaeaeaeae'
+    ],
+    # level2
+    [
     'ffaaffaaff',
     'faffaaffaf',
     'ffaaffaaff',
-    'fffeaaefff',
+    'fffeaaefff'
     ],
-    # level1
+    # level3
     [
     'aaaaaaaaaa',
     'aaaaaaaaaa',
     'aaaaaaaaaa',
-    'aaaaaaaaaa',
+    'aaaaaaaaaa'
     ],
-    # level2
+    # level4
     [
     'aaaaaaaaaa',
     'aaaaaaaaaa',

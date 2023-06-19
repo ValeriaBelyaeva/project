@@ -48,20 +48,20 @@ class Brick:
             if self.brick_type == 'e':
                 self.ruined = True
                 try:
-                    brick_list[self.i-1][self.j]
-                    to_delite.append([self.i-1, self.j])
+                    brick_list[self.j][self.i-1]
+                    to_delite.append([self.j, self.i-1])
                 except:pass
                 try:
-                    brick_list[self.i+1][self.j]
-                    to_delite.append([self.i+1, self.j])
+                    brick_list[self.j][self.i+1]
+                    to_delite.append([self.j, self.i+1])
                 except:pass
                 try:
-                    brick_list[self.i][self.j-1]
-                    to_delite.append([self.i, self.j-1])
+                    brick_list[self.j-1][self.i]
+                    to_delite.append([self.j-1, self.i])
                 except:pass
                 try:
-                    brick_list[self.i][self.j+1]
-                    to_delite.append([self.i, self.j+1])
+                    brick_list[self.j+1][self.i]
+                    to_delite.append([self.j+1, self.i])
                 except:pass
             return to_delite
 

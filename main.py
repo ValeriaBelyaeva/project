@@ -37,7 +37,6 @@ def go_to_next_level():
 
 
 while True:
-    print(need_restart)
     if need_restart:
         need_restart = False
         restart()
